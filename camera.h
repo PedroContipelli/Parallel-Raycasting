@@ -3,13 +3,12 @@
 
 #include "rtweekend.h"
 
-class camera 
-{
+class camera {
 	public:
 		camera(
 			point3 lookfrom,
 			point3 lookat,
-			vec3 vup,
+			vec3   vup,
 			double vfov, // vertical field-of-view in degrees
 			double aspect_ratio,
 			double aperture,
@@ -19,7 +18,6 @@ class camera
 			auto h = tan(theta/2);
 			auto viewport_height = 2.0 * h;
 			auto viewport_width = aspect_ratio * viewport_height;
-
 
 			w = unit_vector(lookfrom - lookat);
 			u = unit_vector(cross(vup, w));
@@ -33,8 +31,7 @@ class camera
 			lens_radius = aperture / 2;
 		}
 
-		ray get_ray(double s, double t) const
-		{
+		ray get_ray(double s, double t) const {
 			vec3 rd = lens_radius * random_in_unit_disk();
 			vec3 offset = u * rd.x() + v * rd.y();
 
