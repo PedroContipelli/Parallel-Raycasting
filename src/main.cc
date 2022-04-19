@@ -80,6 +80,19 @@ hittable_list random_scene() {
 	return world;
 }
 
+camera default_cam(double aspect_ratio) {
+
+	point3 lookfrom(13,2,3);
+	point3 lookat(0,0,0);
+	vec3 vup(0,1,0);
+	auto vfov = 20;
+	auto dist_to_focus = 10.0;
+	auto aperture = 0.1;
+	
+	camera cam(lookfrom, lookat, vup, vfov, aspect_ratio, aperture, dist_to_focus);
+	return cam;
+}
+
 // Begin Pregen Scenes
 
 hittable_list scene1() {
@@ -90,12 +103,25 @@ hittable_list scene1() {
 	world.add(make_shared<sphere>(point3(0,-1000,0), 1000, ground_material));
 
 	auto material_red = make_shared<metal>(color(1.0, 0.0, 0.0), 0.0);
-	world.add(make_shared<sphere>(point3(0,1,0), 1.0, material_red));
+	world.add(make_shared<sphere>(point3(0,1,0), 0.5, material_red));
 
 	auto material_green = make_shared<metal>(color(0.0, 1.0, 0.0), 0.0);
-	world.add(make_shared<sphere>(point3(0,2,0), 1.0, material_green));
+	world.add(make_shared<sphere>(point3(0,2,0), 0.5, material_green));
 
 	return world;
+}
+
+camera cam1(double aspect_ratio) {
+
+	point3 lookfrom(13,2,3);
+	point3 lookat(0,0,0);
+	vec3 vup(0,1,0);
+	auto vfov = 20;
+	auto dist_to_focus = 10.0;
+	auto aperture = 0.1;
+	
+	camera cam(lookfrom, lookat, vup, vfov, aspect_ratio, aperture, dist_to_focus);
+	return cam;
 }
 
 // End Pregen Scenes
@@ -138,14 +164,15 @@ int main() {
 
 	// Camera
 
-	point3 lookfrom(13,2,3);
-	point3 lookat(0,0,0);
-	vec3 vup(0,1,0);
-	auto vfov = 20;
-	auto dist_to_focus = 10.0;
-	auto aperture = 0.1;
-	
-	camera cam(lookfrom, lookat, vup, vfov, aspect_ratio, aperture, dist_to_focus);
+	// point3 lookfrom(13,2,3);
+	// point3 lookat(0,0,0);
+	// vec3 vup(0,1,0);
+	// auto vfov = 20;
+	// auto dist_to_focus = 10.0;
+	// auto aperture = 0.1;
+	// camera cam(lookfrom, lookat, vup, vfov, aspect_ratio, aperture, dist_to_focus);
+
+	camera cam = default_cam(aspect_ratio);
 
 	// Render
 
