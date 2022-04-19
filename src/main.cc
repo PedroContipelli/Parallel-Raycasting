@@ -80,6 +80,26 @@ hittable_list random_scene() {
 	return world;
 }
 
+// Begin Pregen Scenes
+
+hittable_list scene1() {
+	
+	hittable_list world;
+
+	auto ground_material = make_shared<lambertian>(color(0.5, 0.5, 0.5));
+	world.add(make_shared<sphere>(point3(0,-1000,0), 1000, ground_material));
+
+	auto material_red = make_shared<metal>(color(1.0, 0.0, 0.0), 0.0);
+	world.add(make_shared<sphere>(point3(0,1,0), 1.0, material_red));
+
+	auto material_green = make_shared<metal>(color(0.0, 1.0, 0.0), 0.0);
+	world.add(make_shared<sphere>(point3(0,2,0), 1.0, material_green));
+
+	return world;
+}
+
+// End Pregen Scenes
+
 void render(int start, int end, std::stringstream & out, int image_width, int image_height,
 			int samples_per_pixel, int max_depth, camera & cam, hittable_list & world) {
 
@@ -107,12 +127,14 @@ int main() {
 	const auto aspect_ratio = 3.0 / 2.0;
 	const int image_width = 1200;
 	const int image_height = static_cast<int>(image_width / aspect_ratio);
-	const int samples_per_pixel = 100;
+	// const int samples_per_pixel = 100;
+	const int samples_per_pixel = 10;
 	const int max_depth = 10;
 
 	// World
 
-	auto world = random_scene();
+	// auto world = random_scene();
+	auto world = scene1();
 
 	// Camera
 
