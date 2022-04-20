@@ -99,25 +99,69 @@ hittable_list scene1() {
 	
 	hittable_list world;
 
-	auto ground_material = make_shared<lambertian>(color(0.5, 0.5, 0.5));
-	world.add(make_shared<sphere>(point3(0,-1000,0), 1000, ground_material));
+	auto ground_material = make_shared<lambertian>(color(0.1, 0.1, 0.1));
+	world.add(make_shared<sphere>(point3(0,-100,0), 100, ground_material));
 
-	auto material_red = make_shared<metal>(color(1.0, 0.0, 0.0), 0.0);
-	world.add(make_shared<sphere>(point3(0,1,0), 0.5, material_red));
+	auto material_red = make_shared<metal>(color(1.0, 0.0, 0.0), 0.8);
+	world.add(make_shared<sphere>(point3(0,1,1), 1.0, material_red));
 
-	auto material_green = make_shared<metal>(color(0.0, 1.0, 0.0), 0.0);
-	world.add(make_shared<sphere>(point3(0,2,0), 0.5, material_green));
+	auto material_green = make_shared<lambertian>(color(0.0, 1.0, 0.0));
+	world.add(make_shared<sphere>(point3(0,1,-1), 1.0, material_green));
+
+	auto material_blue = make_shared<lambertian>(color(0.0, 0.0, 1.0));
+	world.add(make_shared<sphere>(point3(0,2.70,0), 1.0, material_blue));
 
 	return world;
 }
 
 camera cam1(double aspect_ratio) {
 
-	point3 lookfrom(13,2,3);
-	point3 lookat(0,0,0);
+	point3 lookfrom(15,8,10);
+	point3 lookat(0,1,0);
 	vec3 vup(0,1,0);
 	auto vfov = 20;
-	auto dist_to_focus = 10.0;
+	auto dist_to_focus = 20.0;
+	auto aperture = 0.1;
+	
+	camera cam(lookfrom, lookat, vup, vfov, aspect_ratio, aperture, dist_to_focus);
+	return cam;
+}
+
+hittable_list scene2() {
+
+	hittable_list world;
+
+	auto ground_material = make_shared<lambertian>(color(0.1, 0.1, 0.1));
+	world.add(make_shared<sphere>(point3(0,-10000,0), 10000, ground_material));
+
+	auto material_red = make_shared<metal>(color(1.0, 0.0, 0.0), 0.9);
+	world.add(make_shared<sphere>(point3(0,1,0), 1.0, material_red));
+
+	auto material_orange = make_shared<metal>(color(1.0, 0.65, 0.0), 0.9);
+	world.add(make_shared<sphere>(point3(0,1.5,-3), 1.5, material_orange));
+
+	auto material_yellow = make_shared<metal>(color(0.85, 1.0, 0.0), 0.9);
+	world.add(make_shared<sphere>(point3(0,2,-7), 2.0, material_yellow));
+
+	auto material_green = make_shared<metal>(color(0.0, 1.0, 0.15), 0.9);
+	world.add(make_shared<sphere>(point3(0,2.5,-12), 2.5, material_green));
+
+	auto material_blue = make_shared<metal>(color(0.15, 0.0, 1.0), 0.9);
+	world.add(make_shared<sphere>(point3(0,3,-18), 3.0, material_blue));
+
+	auto material_purple = make_shared<metal>(color(0.50, 0.0, 0.50), 0.9);
+	world.add(make_shared<sphere>(point3(0,3.5,-25), 3.5, material_purple));
+
+	return world;
+}
+
+camera cam2(double aspect_ratio) {
+
+	point3 lookfrom(20,10,30);
+	point3 lookat(0,1,-15);
+	vec3 vup(0,1,0);
+	auto vfov = 20;
+	auto dist_to_focus = 40.0;
 	auto aperture = 0.1;
 	
 	camera cam(lookfrom, lookat, vup, vfov, aspect_ratio, aperture, dist_to_focus);
@@ -153,26 +197,21 @@ int main() {
 	const auto aspect_ratio = 3.0 / 2.0;
 	const int image_width = 1200;
 	const int image_height = static_cast<int>(image_width / aspect_ratio);
-	// const int samples_per_pixel = 100;
-	const int samples_per_pixel = 10;
+	const int samples_per_pixel = 500;
+	// const int samples_per_pixel = 10;
 	const int max_depth = 10;
 
 	// World
 
 	// auto world = random_scene();
-	auto world = scene1();
+	// auto world = scene1();
+	auto world = scene2();
 
 	// Camera
 
-	// point3 lookfrom(13,2,3);
-	// point3 lookat(0,0,0);
-	// vec3 vup(0,1,0);
-	// auto vfov = 20;
-	// auto dist_to_focus = 10.0;
-	// auto aperture = 0.1;
-	// camera cam(lookfrom, lookat, vup, vfov, aspect_ratio, aperture, dist_to_focus);
-
-	camera cam = default_cam(aspect_ratio);
+	// camera cam = default_cam(aspect_ratio);
+	// camera cam = cam1(aspect_ratio);
+	camera cam = cam2(aspect_ratio);
 
 	// Render
 
