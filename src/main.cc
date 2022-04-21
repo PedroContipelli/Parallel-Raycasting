@@ -240,11 +240,11 @@ hittable_list scene3() {
 
 camera cam3(double aspect_ratio) {
 
-	point3 lookfrom(9.54,13.68,6.84);
+	point3 lookfrom(12,8,-4);
 	point3 lookat(1,0,-1);
 	vec3 vup(-1,0,0);
 	auto vfov = 20;
-	auto dist_to_focus = 15.0;
+	auto dist_to_focus = 14.0;
 	auto aperture = 0.1;
 	
 	camera cam(lookfrom, lookat, vup, vfov, aspect_ratio, aperture, dist_to_focus);
@@ -280,23 +280,23 @@ int main() {
 	const auto aspect_ratio = 3.0 / 2.0;
 	const int image_width = 1200;
 	const int image_height = static_cast<int>(image_width / aspect_ratio);
-	// const int samples_per_pixel = 100;
-	const int samples_per_pixel = 10;
+	const int samples_per_pixel = 500;
+	// const int samples_per_pixel = 10;
 	const int max_depth = 10;
 
 	// World
 
 	// auto world = random_scene();
-	// auto world = scene1();
+	auto world = scene1();
 	// auto world = scene2();
-	auto world = scene3();
+	// auto world = scene3();
 
 	// Camera
 
 	// camera cam = default_cam(aspect_ratio);
-	// camera cam = cam1(aspect_ratio);
+	camera cam = cam1(aspect_ratio);
 	// camera cam = cam2(aspect_ratio);
-	camera cam = cam3(aspect_ratio);
+	// camera cam = cam3(aspect_ratio);
 
 	// Render
 
