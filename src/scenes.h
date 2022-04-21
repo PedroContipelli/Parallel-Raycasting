@@ -5,7 +5,7 @@
 
 // BEGIN PREGEN SCENES
 
-// SCENE 1
+// * SCENE 1
 
 hittable_list scene1() {
 	
@@ -39,7 +39,7 @@ camera cam1(double aspect_ratio) {
 	return cam;
 }
 
-// SCENE 2
+// * SCENE 2
 
 hittable_list scene2() {
 
@@ -82,7 +82,7 @@ camera cam2(double aspect_ratio) {
 	return cam;
 }
 
-// SCENE 3
+// * SCENE 3
 
 hittable_list scene3() {
 

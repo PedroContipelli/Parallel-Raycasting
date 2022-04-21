@@ -116,30 +116,29 @@ void render(int start, int end, std::stringstream & out, int image_width, int im
 
 int main() {
 	
-	// Image
+	// * IMAGE
 
 	const auto aspect_ratio = 3.0 / 2.0;
 	const int image_width = 1200;
 	const int image_height = static_cast<int>(image_width / aspect_ratio);
-	// const int samples_per_pixel = 500;
-	const int samples_per_pixel = 10;
+	const int samples_per_pixel = 500;
 	const int max_depth = 10;
 
-	// World
+	// * WORLD
 
 	// auto world = random_scene();
 	// auto world = scene1();
 	// auto world = scene2();
 	auto world = scene3();
 
-	// Camera
+	// * CAMERA
 
 	// camera cam = default_cam(aspect_ratio);
 	// camera cam = cam1(aspect_ratio);
 	// camera cam = cam2(aspect_ratio);
 	camera cam = cam3(aspect_ratio);
 
-	// Render
+	// * RENDER
 
 	std::cerr << "Rendering with " << num_threads << " threads.\n";
 
