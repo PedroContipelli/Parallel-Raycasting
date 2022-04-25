@@ -5,6 +5,7 @@
 #include "hittable_list.h"
 #include "material.h"
 #include "sphere.h"
+#include "scenes.h"
 
 #include <chrono>
 #include <functional>
@@ -80,6 +81,19 @@ hittable_list random_scene() {
 	return world;
 }
 
+camera default_cam(double aspect_ratio) {
+
+	point3 lookfrom(13,2,3);
+	point3 lookat(0,0,0);
+	vec3 vup(0,1,0);
+	auto vfov = 20;
+	auto dist_to_focus = 10.0;
+	auto aperture = 0.1;
+	
+	camera cam(lookfrom, lookat, vup, vfov, aspect_ratio, aperture, dist_to_focus);
+	return cam;
+}
+
 void render(int start, int end, std::stringstream & out, int image_width, int image_height,
 			int samples_per_pixel, int max_depth, camera & cam, hittable_list & world) {
 
@@ -94,7 +108,7 @@ void render(int start, int end, std::stringstream & out, int image_width, int im
 				pixel_color += ray_color(r, world, max_depth);
 			}
 		write_color(out, pixel_color, samples_per_pixel);
-		}	
+		}
 	}
 
 	std::cerr << "Block done.\n";
@@ -102,30 +116,29 @@ void render(int start, int end, std::stringstream & out, int image_width, int im
 
 int main() {
 	
-	// Image
+	// * IMAGE
 
 	const auto aspect_ratio = 3.0 / 2.0;
 	const int image_width = 1200;
 	const int image_height = static_cast<int>(image_width / aspect_ratio);
-	const int samples_per_pixel = 100;
+	const int samples_per_pixel = 500;
 	const int max_depth = 10;
 
-	// World
+	// * WORLD
 
-	auto world = random_scene();
+	// auto world = random_scene();
+	// auto world = scene1();
+	// auto world = scene2();
+	auto world = scene3();
 
-	// Camera
+	// * CAMERA
 
-	point3 lookfrom(13,2,3);
-	point3 lookat(0,0,0);
-	vec3 vup(0,1,0);
-	auto vfov = 20;
-	auto dist_to_focus = 10.0;
-	auto aperture = 0.1;
-	
-	camera cam(lookfrom, lookat, vup, vfov, aspect_ratio, aperture, dist_to_focus);
+	// camera cam = default_cam(aspect_ratio);
+	// camera cam = cam1(aspect_ratio);
+	// camera cam = cam2(aspect_ratio);
+	camera cam = cam3(aspect_ratio);
 
-	// Render
+	// * RENDER
 
 	std::cerr << "Rendering with " << num_threads << " threads.\n";
 
@@ -139,12 +152,32 @@ int main() {
 	int s = image_height - 1;
 	for (int i = 0; i < num_threads - 1; ++i, s -= block_size + 1) {
 		streams[i] = std::stringstream();
-		threads[i] = std::thread(render, s, s - block_size, std::ref(streams[i]), image_width, image_height,
-								 samples_per_pixel, max_depth, std::ref(cam), std::ref(world));
+		threads[i] = std::thread(
+			render,
+			s,
+			s - block_size,
+			std::ref(streams[i]),
+			image_width,
+			image_height,
+			samples_per_pixel,
+			max_depth,
+			std::ref(cam),
+			std::ref(world)
+		);
 	}
 
-	threads[num_threads - 1] = std::thread(render, s, 0, std::ref(streams[num_threads - 1]), image_width,
-										   image_height, samples_per_pixel, max_depth, std::ref(cam), std::ref(world));
+	threads[num_threads - 1] = std::thread(
+		render,
+		s,
+		0,
+		std::ref(streams[num_threads - 1]),
+		image_width,
+		image_height,
+		samples_per_pixel,
+		max_depth,
+		std::ref(cam),
+		std::ref(world)
+	);
 
 	for (std::thread & t : threads)
 		t.join();
