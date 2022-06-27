@@ -9,8 +9,8 @@ Source code for report: **Final Report Source**
 Final Report: **FINAL REPORT.pdf**
 
 Final Presentation: https://youtu.be/d-TCTx__Sn0  
-PPT: https://docs.google.com/presentation/d/1_8pfmU4e-b_m517hYFR8uv0u41-Xwgl9G5mwPqPRfl4/edit?usp=sharing
-Planning Doc: https://docs.google.com/document/d/1sdwpvAu6iAoVt92pTnAiI_WGb7dcElFu3RNW5A1IY6c/edit
+PPT: https://docs.google.com/presentation/d/1_8pfmU4e-b_m517hYFR8uv0u41-Xwgl9G5mwPqPRfl4/edit?usp=sharing  
+Planning Doc: https://docs.google.com/document/d/1sdwpvAu6iAoVt92pTnAiI_WGb7dcElFu3RNW5A1IY6c/edit  
 Overleaf Report: https://www.overleaf.com/1645931653kqscndqfnkky
 
 ### Sources:
